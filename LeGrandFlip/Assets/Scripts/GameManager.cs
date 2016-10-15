@@ -13,11 +13,11 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject startTexts;
 	public Text startLevelText;
-	public List<Vector3> sceneRootPositions;
+	public Transform BallBottomStartPointInLevel;
+	public Transform BallTopStartPointInLevel;
 
-	public Transform BallStartPointInLevel;
-
-
+	public List<Vector3> rootPositionsInOrder;
+	public List<string> levelNamesInOrder;
 
 	void Awake() {
 		if (s != null) {
@@ -46,22 +46,23 @@ public class GameManager : MonoBehaviour {
 		startTexts.SetActive (false);
 	}
 
-	public void LoadFlipper(int index) {
+	public void LoadFlipper(int destinationLevel, bool start_at_top) {
+		
+		this.transform.position = rootPositionsInOrder[destinationLevel]; // camera
 
-		if (index < 0 || index >= sceneRootPositions.Count) {
-			Debug.LogError ("No scene at index " + index);
-			return;
+		if (start_at_top) {
+			// ball starts at the top of a screen
+			playerBall.transform.position = BallTopStartPointInLevel.position;
+			playerBall.rb.velocity = new Vector3 (0f, 0, 0f);
+		} else {
+			// ball starts a the bottom of a screen
+			playerBall.transform.position = BallBottomStartPointInLevel.position;
+			playerBall.rb.velocity = new Vector3 (Random.Range(-250f, 250f), 1000f, 0f);
 		}
 
-		this.transform.position = sceneRootPositions[index]; // camera
-		playerBall.transform.position = BallStartPointInLevel.position;
-		playerBall.rb.velocity = new Vector3 (0f, 1000f, 0f);
-
-		if (index > 0) {
-			startLevelText.text = "Level " + index;
-			startLevelText.enabled = true;
-			StartCoroutine(DisableTextIn (startLevelText, 3f));
-		}
+		startLevelText.text = levelNamesInOrder [destinationLevel];
+		startLevelText.enabled = true;
+		StartCoroutine(DisableTextIn (startLevelText, 2f));
 	}
 
 	private IEnumerator DisableTextIn(Text text, float seconds) {
