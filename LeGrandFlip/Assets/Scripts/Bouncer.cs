@@ -29,6 +29,8 @@ public class Bouncer : MonoBehaviour {
 			}
 			tweenName = name + System.Guid.NewGuid ().ToString();
 			iTween.ShakeScale (sr.gameObject, iTween.Hash ("name", tweenName, "amount", 0.5f * initialSpriteScale , "time", 0.6f));
+		
+			GameScore.instance.HitBouncer (this);
 		}
 	}
 }
