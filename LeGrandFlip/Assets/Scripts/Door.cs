@@ -8,6 +8,11 @@ public class Door : MonoBehaviour {
 
 	public TYPE doorType;
 	public GameObject destinationLevelRoot;
+	public UnityEngine.UI.Text nextNameText;
+
+	void Start() {
+		nextNameText.text = destinationLevelRoot.name;
+	}
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.CompareTag ("Player")) {
