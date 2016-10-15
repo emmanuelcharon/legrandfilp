@@ -14,10 +14,20 @@ public class FlipControl : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (left && Input.GetKeyDown (KeyCode.LeftArrow)) {
-			rb.AddTorque (torqueForce, ForceMode2D.Impulse);
-		} else if (!left && Input.GetKeyDown (KeyCode.RightArrow)) {
-			rb.AddTorque (-torqueForce, ForceMode2D.Impulse);
+		if (left) {
+			if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+				rb.AddTorque (torqueForce, ForceMode2D.Impulse);
+			}
+			if(Input.GetKey (KeyCode.LeftArrow)) {
+				rb.AddTorque (torqueForce, ForceMode2D.Force);
+			}
+		} else {
+			if (Input.GetKeyDown (KeyCode.RightArrow)) {
+				rb.AddTorque (-torqueForce, ForceMode2D.Impulse);
+			}
+			if(Input.GetKey (KeyCode.RightArrow)) {
+				rb.AddTorque (-torqueForce, ForceMode2D.Force);
+			}
 		}
 	}
 }
