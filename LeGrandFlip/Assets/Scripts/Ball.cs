@@ -35,7 +35,7 @@ public class Ball : MonoBehaviour {
 
 		tweenName = name + System.Guid.NewGuid ().ToString();
 
-		iTween.ScaleFrom (sr.gameObject, iTween.Hash ("name", tweenName, "scale", 2f * initialSpriteScale , "time", 0.25f));
+		iTween.ScaleFrom (sr.gameObject, iTween.Hash ("name", tweenName, "scale", 1.3f * initialSpriteScale , "time", 0.25f));
 
 		//particles.Play ();
 	}

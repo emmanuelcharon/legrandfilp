@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,11 +14,12 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject startTexts;
 	public Text startLevelText;
+	public Text levelNameText;
+
 	public Transform BallBottomStartPointInLevel;
 	public Transform BallTopStartPointInLevel;
 
-	public List<Vector3> rootPositionsInOrder;
-	public List<string> levelNamesInOrder;
+	public List<GameObject> levelRoots;
 
 	void Awake() {
 		if (s != null) {
@@ -28,6 +30,8 @@ public class GameManager : MonoBehaviour {
 		}
 
 		touchedInputOnce = false;
+
+
 	}
 
 
@@ -46,9 +50,9 @@ public class GameManager : MonoBehaviour {
 		startTexts.SetActive (false);
 	}
 
-	public void LoadFlipper(int destinationLevel, bool start_at_top) {
+	public void LoadFlipper(GameObject destinationLevelRoot, bool start_at_top) {
 		
-		this.transform.position = rootPositionsInOrder[destinationLevel]; // camera
+		this.transform.position = destinationLevelRoot.transform.position; // camera & UI
 
 		if (start_at_top) {
 			// ball starts at the top of a screen
@@ -60,8 +64,9 @@ public class GameManager : MonoBehaviour {
 			playerBall.rb.velocity = new Vector3 (Random.Range(-250f, 250f), 1000f, 0f);
 		}
 
-		startLevelText.text = levelNamesInOrder [destinationLevel];
+		startLevelText.text = destinationLevelRoot.name;
 		startLevelText.enabled = true;
+		levelNameText.text = destinationLevelRoot.name;
 		StartCoroutine(DisableTextIn (startLevelText, 2f));
 	}
 
