@@ -10,8 +10,13 @@ public class DeathZone : MonoBehaviour {
 	// Use this for initialization
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.CompareTag ("Player")) {
-			Destroy (other);
-			Instantiate (playerBallPrefab, restart.position, Quaternion.identity);
+
+			other.transform.position = restart.position;
+			other.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
+
+			//Destroy (other.gameObject);
+			//GameObject ball = (GameObject) Instantiate (playerBallPrefab, restart.position, Quaternion.identity);
+			//GameManager.s.playerBall = ball.GetComponent<Ball> ();
 		}
 	}
 }

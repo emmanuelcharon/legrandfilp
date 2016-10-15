@@ -9,7 +9,7 @@ public class FlipControl : MonoBehaviour {
 	private Rigidbody2D rb;
 	private float torqueForce = 1000*1000*1.5f;
 
-	void Start () {
+	void Awake () {
 		rb = GetComponent<Rigidbody2D> ();
 	}
 	
@@ -28,6 +28,11 @@ public class FlipControl : MonoBehaviour {
 			if(Input.GetKey (KeyCode.RightArrow)) {
 				rb.AddTorque (-torqueForce, ForceMode2D.Force);
 			}
+		}
+
+		if(!GameManager.s.touchedInputOnce && (Input.GetKeyDown (KeyCode.LeftArrow)||Input.GetKeyDown (KeyCode.RightArrow))){
+			GameManager.s.touchedInputOnce = true;
+			GameManager.s.StartGame ();
 		}
 	}
 }

@@ -5,23 +5,22 @@ using System.Collections;
 public class Ball : MonoBehaviour {
 
 	public SpriteRenderer sr;
-	Rigidbody2D rb;
+	public Rigidbody2D rb;
 	float maxSpeed = 3000f;
 
 	public TrailRenderer trailRenderer;
 	float minTrailSpeed = 2200f;
 
+	//public ParticleSystem particles;
+
 
 	void Start () {
 		initialSpriteScale = sr.transform.localScale;
-		rb = GetComponent<Rigidbody2D> ();
 	}
 	
 	void Update () {
 		rb.velocity = Vector2.ClampMagnitude (rb.velocity, maxSpeed);
-
 		trailRenderer.enabled = rb.velocity.magnitude > minTrailSpeed; 
-
 	}
 
 	private string tweenName;
@@ -36,6 +35,9 @@ public class Ball : MonoBehaviour {
 
 		tweenName = name + System.Guid.NewGuid ().ToString();
 
-		iTween.ScaleFrom (sr.gameObject, iTween.Hash ("name", tweenName, "scale", 1.5f * initialSpriteScale , "time", 0.2f));
+		iTween.ScaleFrom (sr.gameObject, iTween.Hash ("name", tweenName, "scale", 2f * initialSpriteScale , "time", 0.25f));
+
+		//particles.Play ();
 	}
+		
 }
