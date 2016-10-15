@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour {
 		playerBall.rb.isKinematic = false;
 		//iTween.FadeTo(startTexts, iTween.Hash ("alpha", 0f, "time", 2f, "includechildren", true));
 		startTexts.SetActive (false);
+
+		GameTimer.instance.StartTimer ();
 	}
 
 	public void LoadFlipper(GameObject destinationLevelRoot, bool start_at_top) {
