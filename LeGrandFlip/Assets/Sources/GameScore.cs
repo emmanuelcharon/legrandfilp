@@ -32,6 +32,8 @@ public class GameScore : MonoBehaviour
 
 	public	float		  size				= 0f;
 
+	private Vector3 startPosition = Vector3.zero;
+
 	/*
 	public struct TypedScore
 	{
@@ -58,6 +60,7 @@ public class GameScore : MonoBehaviour
 	void Awake ()
 	{
 		instance = this;
+		instance.startPosition = transform.localPosition;
 	}
 
 	public void HitBouncer(Bouncer bouncer)
@@ -88,7 +91,7 @@ public class GameScore : MonoBehaviour
 		if (_greenScore > 0)
 			greenIcon.gameObject.SetActive (true);
 
-		scoreText.text = _globalScore.ToString ("000000000");
+		scoreText.text = _globalScore.ToString ("000000");
 
 
 
@@ -154,7 +157,7 @@ public class GameScore : MonoBehaviour
 		ResetAfterAnchor (blueIcon);
 		*/
 
-		blueIcon.anchoredPosition = new Vector3 (Mathf.Max(120f, size * temp), 0f, 0f);
+		blueIcon.anchoredPosition = new Vector3 (Mathf.Max(100f, size * temp), 0f, 0f);
 
 		greenScoreImage.anchorMax = new Vector2 (temp, 1f);
 		temp -= green;
@@ -194,6 +197,8 @@ public class GameScore : MonoBehaviour
 		blueIcon.gameObject.SetActive (false);
 
 		DrawScore ();
+
+		MoveToDefault ();
 	}
 
 	void CleanPourcent (ref float v1, ref float v2, ref float v3)
@@ -214,4 +219,17 @@ public class GameScore : MonoBehaviour
 			}
 		}		
 	}
+
+	public void MoveToLeaderboard ()
+	{
+		transform.localPosition = new Vector3 (0, 314f, 0f);
+		transform.localScale = new Vector3 (2f, 2f, 2f);
+	}
+
+	public void MoveToDefault ()
+	{
+		transform.localPosition = startPosition;
+		transform.localScale = new Vector3 (1f, 1f, 1f);
+	}
+
 }

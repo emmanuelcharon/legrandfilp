@@ -17,6 +17,10 @@ public class GameLeaderboard : MonoBehaviour {
 
 	private static GameLeaderboard _instance = null;
 
+	public Color defaultColor;
+	public Color lastScoreColor;
+	public Color badScore;
+
 	public static GameLeaderboard instance
 	{
 		get { return _instance; }
@@ -50,6 +54,7 @@ public class GameLeaderboard : MonoBehaviour {
 		inputField.onValueChanged.RemoveAllListeners ();
 		inputField.onValueChanged.AddListener (UpdatePlayerName);
 
+		GameScore.instance.MoveToLeaderboard ();
 	}
 
 
@@ -86,13 +91,27 @@ public class GameLeaderboard : MonoBehaviour {
 
 	public void ShowLeaderboards ()
 	{
-		ShowLeadarbord (GameSave.instance.redScore, redScoreRoot.GetComponentsInChildren<GamePlayerScoreView>());
-		ShowLeadarbord (GameSave.instance.blueScore, blueScoreRoot.GetComponentsInChildren<GamePlayerScoreView>());
-		ShowLeadarbord (GameSave.instance.greenScore, greenScoreRoot.GetComponentsInChildren<GamePlayerScoreView>());
+		ShowLeadarbord (
+			GameSave.instance.redScore, 
+			redScoreRoot.GetComponentsInChildren<GamePlayerScoreView>(),
+			GameScore.instance.redScore
+		);
+		ShowLeadarbord (
+			GameSave.instance.blueScore, 
+			blueScoreRoot.GetComponentsInChildren<GamePlayerScoreView>(),
+			GameScore.instance.blueScore
+		);
+
+		ShowLeadarbord (
+			GameSave.instance.greenScore,
+			greenScoreRoot.GetComponentsInChildren<GamePlayerScoreView>(),
+			GameScore.instance.greenScore
+		);
 	}
 
-	public void ShowLeadarbord (List<PlayerScore> scores, GamePlayerScoreView[] entries)
+	public void ShowLeadarbord (List<PlayerScore> scores, GamePlayerScoreView[] entries, int lastScore)
 	{
+		/*
 		int index = scores.FindIndex (s => s.id == GameSave.instance.uniqueScoreId);
 
 		int startIndex = Mathf.Max (index - 3, 0);
@@ -112,6 +131,32 @@ public class GameLeaderboard : MonoBehaviour {
 				entries [entrieIndex].Fill ("---", 0, 0, default(Color));
 
 			entrieIndex++;
+		}*/
+
+		int index = scores.FindIndex (s => s.id == GameSave.instance.uniqueScoreId);
+
+		bool isInTop = false;
+
+		for (int i = 0; i < 5; i++) 
+		{
+			if (isInTop == false) {
+				isInTop = (i == index);
+			}
+
+			if (i < scores.Count) {
+				entries [i].Fill (
+					scores [i].playername, 
+					scores [i].score, 
+					scores [i].rank,
+					((i == index) ? lastScoreColor : defaultColor));
+			} else {
+				entries [i].gameObject.SetActive (false);
+			}
+		}
+
+		if (isInTop == false) 
+		{
+			entries [5].Fill (inputField.text, lastScore, 0, badScore);
 		}
 	}
 }
