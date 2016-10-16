@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+
 public class GameScore : MonoBehaviour 
 {
 	public int largeBouncerScore	= 0;
@@ -12,8 +13,12 @@ public class GameScore : MonoBehaviour
 	private int _redScore			= 0;
 	private int _blueScore			= 0;
 	private int _greenScore			= 0;
-
 	private int _globalScore		= 0;
+
+	public int redScore { get { return _redScore; } }
+	public int blueScore { get { return _blueScore; } }
+	public int greenScore { get { return _greenScore; } }
+	public int globalscore {get {return _globalScore;}}
 
 	public	RectTransform redScoreImage		= null;
 	public 	RectTransform blueScoreImage	= null;
@@ -116,6 +121,10 @@ public class GameScore : MonoBehaviour
 			green = (float)_greenScore / (float)_globalScore;
 		}
 
+		CleanPourcent (ref red, ref blue, ref green);
+		CleanPourcent (ref blue, ref red, ref green);
+		CleanPourcent (ref green, ref red, ref green);
+
 		float temp = 1f;
 
 		//Debug.LogFormat ("global {0} red {1} : {2}   blue {3} : {4}  green {5} : {6}",
@@ -132,7 +141,7 @@ public class GameScore : MonoBehaviour
 		ResetAfterAnchor (redIcon);
 		*/
 
-		redIcon.anchoredPosition = new Vector3 (Mathf.Max(240f, size * temp), 0f, 0f);
+		redIcon.anchoredPosition = new Vector3 (Mathf.Max(220f, size * temp), 0f, 0f);
 
 		blueScoreImage.anchorMax = new Vector2 (temp, 1f);
 		temp -= blue;
@@ -185,5 +194,24 @@ public class GameScore : MonoBehaviour
 		blueIcon.gameObject.SetActive (false);
 
 		DrawScore ();
+	}
+
+	void CleanPourcent (ref float v1, ref float v2, ref float v3)
+	{
+		if (v1 > 0f && v1 < 0.05f) 
+		{
+			if (v2 > 0.1f) 
+			{
+				float diff = 0.05f - v1;
+				v1 += diff;
+				v2 -= diff;
+			}
+			else if (v3 > 0.1f) 
+			{
+				float diff = 0.05f - v3;
+				v1 += diff;
+				v3 -= diff;
+			}
+		}		
 	}
 }

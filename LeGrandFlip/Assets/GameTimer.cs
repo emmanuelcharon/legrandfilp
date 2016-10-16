@@ -51,9 +51,12 @@ public class GameTimer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (_gameStarted && Time.time < _endTime) 
-		{
+		if (_gameStarted && Time.time < _endTime) {
 			fill.fillAmount = (Time.time - _startTime) / _endTime;
+		} else if (_gameStarted == true) {
+			_gameStarted = false;
+			fill.fillAmount = 1f;
+			GameLeaderboard.instance.GameOver ();
 		}
 	}
 }
