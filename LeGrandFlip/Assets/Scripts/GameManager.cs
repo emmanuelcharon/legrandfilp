@@ -57,12 +57,15 @@ public class GameManager : MonoBehaviour {
 			}
 		} 
 
-		GameTimer.instance.StartTimer ();
 	}
 
 	public void LoadFlipper(GameObject destinationLevelRoot, bool start_at_top) {
 		
 		this.transform.position = destinationLevelRoot.transform.position; // camera & UI
+
+		if (playerBall == null) {
+			return;
+		}
 
 		if (start_at_top) {
 			// ball starts at the top of a screen
@@ -78,7 +81,15 @@ public class GameManager : MonoBehaviour {
 
 		if (specific.name == "Primaire" && !backgroundMusic.isPlaying) {
 			backgroundMusic.Play ();
+
 		}
+
+		if (specific.name == "Primaire" && !GameTimer.instance._gameStarted) {
+			GameTimer.instance.StartTimer ();
+		}
+
+
+
 
 		GameObject startLevelTextGO = (GameObject)Instantiate (startlevelTextPrefab, textPopupContainer.transform.position, Quaternion.identity);
 		startLevelTextGO.transform.SetParent (textPopupContainer.transform, true);

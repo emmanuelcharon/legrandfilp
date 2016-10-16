@@ -106,6 +106,9 @@ public class GameSave
 
 		scores.RemoveAll (s => s.score <= 0);
 
+		if (scores.Count == 0)
+			return;
+
 		scores.Sort ();
 
 		scores [0].rank = rank;

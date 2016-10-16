@@ -10,7 +10,7 @@ public class GameTimer : MonoBehaviour {
 
 	private float	_startTime				= 	0f;
 	private float   _endTime				=	0f;
-	private bool	_gameStarted			=	false;
+	public bool	_gameStarted			=	false;
 
 	public	Image 	fill					=	null;
 

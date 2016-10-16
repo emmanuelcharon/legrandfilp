@@ -50,6 +50,7 @@ public class GameLeaderboard : MonoBehaviour {
 	public void GameOver ()
 	{
 		endGame = true;
+		Destroy(GameManager.s.playerBall);
 		backgroundScreen.SetActive (true);
 		leaderboardScreen.SetActive (false);
 		enterNameScreen.SetActive (true);
