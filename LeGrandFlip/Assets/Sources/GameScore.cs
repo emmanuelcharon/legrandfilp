@@ -49,7 +49,7 @@ public class GameScore : MonoBehaviour
 		get { return _instance; }
 		set 
 		{
-			if (_instance == null) {
+			if (_instance == null || _instance.gameObject == null) {
 				_instance = value;
 			} else {
 				GameObject.Destroy (value.gameObject);

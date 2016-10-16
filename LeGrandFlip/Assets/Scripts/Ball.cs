@@ -39,5 +39,10 @@ public class Ball : MonoBehaviour {
 
 		//particles.Play ();
 	}
+
+	void OnDestroy ()
+	{
+		tweenName = string.Empty;
+	}
 		
 }

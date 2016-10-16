@@ -22,12 +22,14 @@ public class GameLeaderboard : MonoBehaviour {
 	public Color lastScoreColor;
 	public Color badScore;
 
+	public bool leaderboardVisible = false;
+
 	public static GameLeaderboard instance
 	{
 		get { return _instance; }
 		set 
 		{
-			if (_instance == null) {
+			if (_instance == null || _instance.gameObject == null) {
 				_instance = value;
 			} else {
 				GameObject.Destroy (value.gameObject);
@@ -58,6 +60,14 @@ public class GameLeaderboard : MonoBehaviour {
 		inputField.onValueChanged.RemoveAllListeners ();
 		inputField.onValueChanged.AddListener (UpdatePlayerName);
 
+		Destroy (GameObject.Find ("Primaire"));
+		Destroy (GameObject.Find ("College"));
+		Destroy (GameObject.Find ("Emplois1C"));
+		Destroy (GameObject.Find ("ToutBacES"));
+		Destroy (GameObject.Find ("ToutBacS"));
+		Destroy (GameObject.Find ("ToutBacL"));
+		Destroy (GameObject.Find ("ToutBacProTechno"));
+
 		GameScore.instance.MoveToLeaderboard ();
 	}
 
@@ -68,11 +78,10 @@ public class GameLeaderboard : MonoBehaviour {
 		if (endGame == false)
 			return;
 		
-		if (Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetKeyDown (KeyCode.Return)) 
-		{
+		if (inputField.text.Length == 3 && Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetKeyDown (KeyCode.Return)) {
 			enterNameScreen.SetActive (false);
 
-			GameSave.AddScore (inputField.text.ToUpper(), 
+			GameSave.AddScore (inputField.text.ToUpper (), 
 				GameScore.instance.globalscore, 
 				GameScore.instance.redScore, 
 				GameScore.instance.blueScore,
@@ -80,6 +89,15 @@ public class GameLeaderboard : MonoBehaviour {
 
 			leaderboardScreen.SetActive (true);
 			ShowLeaderboards ();
+			leaderboardVisible = true;
+		} else {
+			inputField.text +=	Input.inputString;
+		}
+
+		if (leaderboardVisible == true && Input.GetKeyDown(KeyCode.R))
+		{
+			GameObject.Destroy (GameObject.Find ("GameManager"));
+			UnityEngine.SceneManagement.SceneManager.LoadScene ("Menu");
 		}
 	}
 
@@ -139,6 +157,8 @@ public class GameLeaderboard : MonoBehaviour {
 
 		int index = scores.FindIndex (s => s.id == GameSave.instance.uniqueScoreId);
 
+		Debug.Log ("my score is at " + index);
+
 		bool isInTop = false;
 
 		for (int i = 0; i < 5; i++) 
@@ -160,9 +180,10 @@ public class GameLeaderboard : MonoBehaviour {
 			}
 		}
 
-		if (isInTop == false) 
-		{
+		if (isInTop == false) {
 			entries [5].Fill (inputField.text, lastScore, 0, badScore, true);
+		} else {
+			entries [5].Hide ();
 		}
 	}
 }

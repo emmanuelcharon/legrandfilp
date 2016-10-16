@@ -22,8 +22,18 @@ public class GamePlayerScoreView : MonoBehaviour
 
 		selectedPlayer.enabled = selectedScore;
 
+		playerNameText.color = new Color (playerNameText.color.r, playerNameText.color.g, playerNameText.color.b, 1f);
+		playerScoreText.color = new Color (playerScoreText.color.r, playerScoreText.color.g, playerScoreText.color.b, 1f);
+
 		//playerNameText.color = textColor;
 		//playerScoreText.color = textColor;
 		//playerRankText.color = textColor;
+	}
+
+	public void Hide ()
+	{
+		playerNameText.color = new Color (playerNameText.color.r, playerNameText.color.g, playerNameText.color.b, 0f);
+		playerScoreText.color = new Color (playerScoreText.color.r, playerScoreText.color.g, playerScoreText.color.b, 0f);
+		selectedPlayer.enabled = false;
 	}
 }

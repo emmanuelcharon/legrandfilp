@@ -24,7 +24,7 @@ public class GameTimer : MonoBehaviour {
 		get { return _instance; }
 		set 
 		{
-			if (_instance == null) {
+			if (_instance == null || _instance.gameObject == null) {
 				_instance = value;
 			} else {
 				GameObject.Destroy (value.gameObject);
@@ -59,7 +59,7 @@ public class GameTimer : MonoBehaviour {
 	void Update () 
 	{
 		if (_gameStarted && Time.time < _endTime) {
-			fill.fillAmount = (Time.time - _startTime) / _endTime;
+			fill.fillAmount = (Time.time - _startTime) / gameDurationInSeconds;
 		} else if (_gameStarted == true) {
 			_gameStarted = false;
 			fill.fillAmount = 1f;
