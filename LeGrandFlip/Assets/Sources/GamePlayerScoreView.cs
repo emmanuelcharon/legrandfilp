@@ -7,8 +7,9 @@ public class GamePlayerScoreView : MonoBehaviour
 	public Text playerNameText = null;
 	public Text playerScoreText = null;
 	//public Text playerRankText = null;
+	public Image selectedPlayer = null;
 
-	public void Fill (string playerName, int playerScore, uint playerRank, Color textColor)
+	public void Fill (string playerName, int playerScore, uint playerRank, Color textColor, bool selectedScore)
 	{
 		if (playerScore > 0) {
 			playerNameText.text = playerName;
@@ -19,8 +20,10 @@ public class GamePlayerScoreView : MonoBehaviour
 			playerScoreText.text = playerScore.ToString ("000000");
 		}
 
-		playerNameText.color = textColor;
-		playerScoreText.color = textColor;
+		selectedPlayer.enabled = selectedScore;
+
+		//playerNameText.color = textColor;
+		//playerScoreText.color = textColor;
 		//playerRankText.color = textColor;
 	}
 }

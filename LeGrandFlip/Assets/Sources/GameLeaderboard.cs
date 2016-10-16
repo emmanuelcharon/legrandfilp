@@ -10,6 +10,7 @@ public class GameLeaderboard : MonoBehaviour {
 
 	public GameObject enterNameScreen = null;
 	public GameObject leaderboardScreen = null;
+	public GameObject backgroundScreen	= null;
 
 	public Transform redScoreRoot	= null;
 	public Transform blueScoreRoot = null;
@@ -41,6 +42,7 @@ public class GameLeaderboard : MonoBehaviour {
 
 		leaderboardScreen.SetActive (false);
 		enterNameScreen.SetActive (false);
+		backgroundScreen.SetActive (false);
 	}
 
 	bool endGame = false;
@@ -48,6 +50,7 @@ public class GameLeaderboard : MonoBehaviour {
 	public void GameOver ()
 	{
 		endGame = true;
+		backgroundScreen.SetActive (true);
 		leaderboardScreen.SetActive (false);
 		enterNameScreen.SetActive (true);
 
@@ -148,7 +151,9 @@ public class GameLeaderboard : MonoBehaviour {
 					scores [i].playername, 
 					scores [i].score, 
 					scores [i].rank,
-					((i == index) ? lastScoreColor : defaultColor));
+					((i == index) ? lastScoreColor : defaultColor),
+					(i==index)
+				);
 			} else {
 				entries [i].gameObject.SetActive (false);
 			}
@@ -156,7 +161,7 @@ public class GameLeaderboard : MonoBehaviour {
 
 		if (isInTop == false) 
 		{
-			entries [5].Fill (inputField.text, lastScore, 0, badScore);
+			entries [5].Fill (inputField.text, lastScore, 0, badScore, true);
 		}
 	}
 }
