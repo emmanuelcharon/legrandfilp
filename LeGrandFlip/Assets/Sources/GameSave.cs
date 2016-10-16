@@ -61,6 +61,7 @@ public class GameSave
 		string jsonContent = string.Empty;
 
 		jsonContent = PlayerPrefs.GetString ("leaderboard", string.Empty);
+
 		GameSave gameSave = null;
 
 		if (string.IsNullOrEmpty (jsonContent) == false) {
@@ -102,6 +103,8 @@ public class GameSave
 			return;
 		
 		uint rank = 1;
+
+		scores.RemoveAll (s => s.score <= 0);
 
 		scores.Sort ();
 
