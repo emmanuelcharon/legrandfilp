@@ -60,10 +60,10 @@ public class GameScore : MonoBehaviour
 		instance = this;
 	}
 
-	public void HitBouncer(Bouncer bouncer)
+	public int HitBouncer(Bouncer bouncer)
 	{
 		if (bouncer.bouncerType == Bouncer.TYPE.GREY)
-			return;
+			return 0;
 
 		int score = GetScore (bouncer.bouncerSize);
 		_globalScore += score;
@@ -94,6 +94,8 @@ public class GameScore : MonoBehaviour
 
 		if (_globalScore > 0)
 			DrawScore ();
+
+		return score;
 	}
 
 	private int GetScore (Bouncer.SIZE size)

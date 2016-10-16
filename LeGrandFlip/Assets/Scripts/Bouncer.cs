@@ -39,7 +39,10 @@ public class Bouncer : MonoBehaviour {
 			audioSource.Play ();
 			Destroy (soundChild, 5f);
 
-			GameScore.instance.HitBouncer (this);
+			int score = GameScore.instance.HitBouncer (this);
+
+			GameManager.s.CreateScoreTextPopup (this.transform.position, score, 
+				GameManager.s.colorFromBouncerType(bouncerType), bouncerSize);
 		}
 	}
 }

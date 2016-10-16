@@ -18,6 +18,7 @@ public class Door : MonoBehaviour {
 		} 
 
 		nextNameText.text = destinationLevelRoot.GetComponent<LevelSpecificArt>().levelName;
+		nextNameText.enabled = false;
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
