@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour {
 		} 
 
 		backgroundMusic.Play ();
+
+		GameTimer.instance.StartTimer ();
 	}
 
 	public void LoadFlipper(GameObject destinationLevelRoot, bool start_at_top) {
