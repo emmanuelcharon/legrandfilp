@@ -30,6 +30,15 @@ public class Bouncer : MonoBehaviour {
 			tweenName = name + System.Guid.NewGuid ().ToString();
 			iTween.ShakeScale (sr.gameObject, iTween.Hash ("name", tweenName, "amount", 0.5f * initialSpriteScale , "time", 0.6f));
 		
+			GameObject soundChild = new GameObject ();
+			soundChild.transform.SetParent (this.transform);
+			AudioSource audioSource = soundChild.AddComponent<AudioSource> ();
+			audioSource.clip = GameManager.s.soundBouncer;
+			audioSource.loop = false;
+			audioSource.playOnAwake = false;
+			audioSource.Play ();
+			Destroy (soundChild, 5f);
+
 			GameScore.instance.HitBouncer (this);
 		}
 	}

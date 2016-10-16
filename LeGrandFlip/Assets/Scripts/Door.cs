@@ -11,7 +11,13 @@ public class Door : MonoBehaviour {
 	public UnityEngine.UI.Text nextNameText;
 
 	void Start() {
-		nextNameText.text = destinationLevelRoot.name;
+		if (destinationLevelRoot == null) {
+			Transform ggp = this.transform.parent.parent;
+			Debug.LogError (ggp.name + "missing door destination; door:" + this.name);
+			return;
+		} 
+
+		nextNameText.text = destinationLevelRoot.GetComponent<LevelSpecificArt>().levelName;
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {

@@ -19,7 +19,9 @@ public class GameManager : MonoBehaviour {
 	public Transform BallBottomStartPointInLevel;
 	public Transform BallTopStartPointInLevel;
 
-	public List<GameObject> levelRoots;
+	public string overrideStartLevel;
+
+	public AudioSource backgroundMusic;
 
 	void Awake() {
 		if (s != null) {
@@ -48,6 +50,15 @@ public class GameManager : MonoBehaviour {
 		playerBall.rb.isKinematic = false;
 		//iTween.FadeTo(startTexts, iTween.Hash ("alpha", 0f, "time", 2f, "includechildren", true));
 		startTexts.SetActive (false);
+
+		if (!string.IsNullOrEmpty (overrideStartLevel)) { 
+			GameObject root = GameObject.Find (overrideStartLevel);
+			if (root != null) {
+				LoadFlipper (root, false);
+			}
+		} 
+
+		backgroundMusic.Play ();
 	}
 
 	public void LoadFlipper(GameObject destinationLevelRoot, bool start_at_top) {
@@ -64,9 +75,10 @@ public class GameManager : MonoBehaviour {
 			playerBall.rb.velocity = new Vector3 (Random.Range(-250f, 250f), 1000f, 0f);
 		}
 
-		startLevelText.text = destinationLevelRoot.name;
+		LevelSpecificArt specific = destinationLevelRoot.GetComponent<LevelSpecificArt> ();
+
+		startLevelText.text = levelNameText.text = specific.levelName;
 		startLevelText.enabled = true;
-		levelNameText.text = destinationLevelRoot.name;
 		StartCoroutine(DisableTextIn (startLevelText, 2f));
 	}
 
@@ -75,6 +87,16 @@ public class GameManager : MonoBehaviour {
 		text.enabled = false;
 	}
 
+	public Color[] couleursRampes;
+
+	public AudioClip[] soundsBricks;
+	public AudioClip soundBouncer;
+
+	public AudioSource leftFlipperSoundOn;
+	public AudioSource leftFlipperSoundOff;
+
+	public AudioSource rightFlipperSoundOn;
+	public AudioSource rightFlipperSoundOff;
 
 
 }
