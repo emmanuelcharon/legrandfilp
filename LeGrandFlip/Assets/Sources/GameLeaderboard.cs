@@ -86,31 +86,30 @@ public class GameLeaderboard : MonoBehaviour {
 
 	public void ShowLeaderboards ()
 	{
-		ShowLeadarbord (GameSave.instance.redScore, redScoreRoot.GetComponentsInChildren<Text>());
-		ShowLeadarbord (GameSave.instance.blueScore, blueScoreRoot.GetComponentsInChildren<Text>());
-		ShowLeadarbord (GameSave.instance.greenScore, greenScoreRoot.GetComponentsInChildren<Text>());
+		ShowLeadarbord (GameSave.instance.redScore, redScoreRoot.GetComponentsInChildren<GamePlayerScoreView>());
+		ShowLeadarbord (GameSave.instance.blueScore, blueScoreRoot.GetComponentsInChildren<GamePlayerScoreView>());
+		ShowLeadarbord (GameSave.instance.greenScore, greenScoreRoot.GetComponentsInChildren<GamePlayerScoreView>());
 	}
 
-	public void ShowLeadarbord (List<PlayerScore> scores, Text[] entries)
+	public void ShowLeadarbord (List<PlayerScore> scores, GamePlayerScoreView[] entries)
 	{
 		int index = scores.FindIndex (s => s.id == GameSave.instance.uniqueScoreId);
 
 		int startIndex = Mathf.Max (index - 3, 0);
-		int lastIndex = startIndex + 6;
+		int lastIndex = startIndex + 7;
 
 		int entrieIndex = 0;
 
 		for (int i = startIndex; i < lastIndex; i++) 
 		{
-			if (i < scores.Count) 
-			{
-				entries [entrieIndex].text = scores [i].ToString ();
-			
-				if (i == index)
-					entries [entrieIndex].color = Color.yellow;
-			}
-			else
-				entries [entrieIndex].text = PlayerScore.Empty ();
+			if (i < scores.Count) {
+				entries [entrieIndex].Fill (
+					scores [i].playername, 
+					scores [i].score, 
+					scores [i].rank,
+					((i == index) ? Color.yellow : Color.black));
+			} else
+				entries [entrieIndex].Fill ("---", 0, 0, default(Color));
 
 			entrieIndex++;
 		}
