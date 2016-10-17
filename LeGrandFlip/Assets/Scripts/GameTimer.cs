@@ -65,6 +65,9 @@ public class GameTimer : MonoBehaviour {
 			fill.fillAmount = 1f;
 			GameLeaderboard.instance.GameOver ();
 		}
+
+		if (Input.GetKeyDown (KeyCode.Escape))
+			Application.Quit ();
 	}
 
 	IEnumerator RunTimer ()

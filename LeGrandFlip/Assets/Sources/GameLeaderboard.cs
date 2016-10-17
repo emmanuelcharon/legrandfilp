@@ -68,9 +68,23 @@ public class GameLeaderboard : MonoBehaviour {
 		Destroy (GameObject.Find ("ToutBacL"));
 		Destroy (GameObject.Find ("ToutBacProTechno"));
 
+		DeleteBalls ();
+
+
 		GameScore.instance.MoveToLeaderboard ();
 	}
 
+	void DeleteBalls()
+	{
+		GameObject[] balls = GameObject.FindGameObjectsWithTag("Player");
+		foreach(GameObject b in balls)
+		{
+			GameObject.Destroy (b.GetComponent<Rigidbody2D> ());
+			GameObject.Destroy(b.GetComponent<Collider2D>());
+			b.SendMessage ("ResetTween");
+			GameObject.Destroy(b);
+		}		
+	}
 
 	// Update is called once per frame
 	void Update () 
@@ -96,6 +110,8 @@ public class GameLeaderboard : MonoBehaviour {
 
 		if (leaderboardVisible == true && Input.GetKeyDown(KeyCode.R))
 		{
+			DeleteBalls ();
+
 			GameObject.Destroy (GameObject.Find ("GameManager"));
 			UnityEngine.SceneManagement.SceneManager.LoadScene ("Menu");
 		}

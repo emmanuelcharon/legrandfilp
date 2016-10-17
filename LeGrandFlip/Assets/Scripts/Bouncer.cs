@@ -23,8 +23,15 @@ public class Bouncer : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D other) {
 
 		if (other.gameObject.CompareTag ("Player")) {
-			if (!string.IsNullOrEmpty (tweenName)) {
-				iTween.StopByName(tweenName);
+			if (!string.IsNullOrEmpty (tweenName)) 
+			{
+				try
+				{
+					iTween.StopByName(tweenName);
+				}catch(System.Exception) {
+					tweenName = string.Empty;
+				}
+
 				sr.transform.localScale = initialSpriteScale;
 			}
 			tweenName = name + System.Guid.NewGuid ().ToString();

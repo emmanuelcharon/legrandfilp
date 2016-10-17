@@ -28,8 +28,17 @@ public class Ball : MonoBehaviour {
 
 	void OnCollisionExit2D(Collision2D other) {
 
-		if (!string.IsNullOrEmpty (tweenName)) {
-			iTween.StopByName(tweenName);
+		if (!string.IsNullOrEmpty (tweenName)) 
+		{
+			try
+			{
+				iTween.StopByName(tweenName);
+			}
+			catch(System.Exception) 
+			{
+				tweenName = string.Empty;
+			}
+
 			sr.transform.localScale = initialSpriteScale;
 		}
 
@@ -38,6 +47,11 @@ public class Ball : MonoBehaviour {
 		iTween.ScaleFrom (sr.gameObject, iTween.Hash ("name", tweenName, "scale", 1.3f * initialSpriteScale , "time", 0.25f));
 
 		//particles.Play ();
+	}
+
+	public void ResetTween ()
+	{
+		tweenName = string.Empty;
 	}
 
 	void OnDestroy ()
