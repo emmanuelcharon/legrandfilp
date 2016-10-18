@@ -6,7 +6,7 @@ public class Ball : MonoBehaviour {
 
 	public SpriteRenderer sr;
 	public Rigidbody2D rb;
-	float maxSpeed = 3000f;
+	float maxSpeed = 2800f;
 
 	public TrailRenderer trailRenderer;
 	float minTrailSpeed = 2200f;

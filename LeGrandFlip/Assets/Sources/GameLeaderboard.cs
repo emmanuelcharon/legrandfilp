@@ -60,6 +60,9 @@ public class GameLeaderboard : MonoBehaviour {
 		inputField.onValueChanged.RemoveAllListeners ();
 		inputField.onValueChanged.AddListener (UpdatePlayerName);
 
+		inputField.ActivateInputField ();
+		inputField.Select ();
+
 		Destroy (GameObject.Find ("Primaire"));
 		Destroy (GameObject.Find ("College"));
 		Destroy (GameObject.Find ("Emplois1C"));
@@ -105,7 +108,7 @@ public class GameLeaderboard : MonoBehaviour {
 			ShowLeaderboards ();
 			leaderboardVisible = true;
 		} else {
-			inputField.text +=	Input.inputString;
+			//inputField.text +=	Input.inputString; -> ça faisait bugger bizarrement
 		}
 
 		if (leaderboardVisible == true && Input.GetKeyDown(KeyCode.R))
