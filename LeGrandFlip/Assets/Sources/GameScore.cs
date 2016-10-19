@@ -224,14 +224,14 @@ public class GameScore : MonoBehaviour
 
 	public void MoveToLeaderboard ()
 	{
-		transform.localPosition = new Vector3 (0, 314f, 0f);
-		transform.localScale = new Vector3 (2f, 2f, 2f);
+		transform.localPosition = new Vector3 (35f, 343f, 0f);
+		transform.localScale = 1.3f * Vector3.one; 
 	}
 
 	public void MoveToDefault ()
 	{
 		transform.localPosition = startPosition;
-		transform.localScale = new Vector3 (1f, 1f, 1f);
+		transform.localScale = Vector3.one;
 	}
 
 }
